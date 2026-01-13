@@ -5,6 +5,7 @@ require("dotenv").config();
 
 const {DbConnection} = require('./config/connectDb.js');
 const userRoute = require('./routes/userRoutes.js');
+const chatRoute = require('./routes/chatRoutes.js');
 
 const app = express();
 
@@ -19,6 +20,7 @@ app.get('/',(req,res)=>{
 });
 
 app.use('/api/user', userRoute);
+app.use('/api/chat', chatRoute);
 
 DbConnection();
 
