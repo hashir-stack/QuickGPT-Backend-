@@ -4,6 +4,7 @@ require("dotenv").config();
 
 
 const {DbConnection} = require('./config/connectDb.js');
+const userRoute = require('./routes/userRoutes.js');
 
 const app = express();
 
@@ -16,6 +17,8 @@ app.use(express.json());
 app.get('/',(req,res)=>{
     res.send("Server is Live!!")
 });
+
+app.use('/api/user', userRoute);
 
 DbConnection();
 
