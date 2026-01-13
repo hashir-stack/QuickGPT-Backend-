@@ -47,3 +47,23 @@ exports.getChats = async (req,res)=>{
         })
     }
 };
+
+// Controller to delete the chats
+exports.deleteChat = async(req,res)=>{
+    try {
+        const userId = req.user._id;
+        const {chatId} = req.body;
+
+        await Chat.deleteOne({_id:chatId , userId});
+
+        res.json({
+            success:true,
+            message:"Successfully Deleted the Chat..."
+        })
+    } catch (error) {
+        return res.json({
+            success:false,
+            message:error.message
+        })
+    }
+};
