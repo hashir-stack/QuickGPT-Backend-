@@ -26,4 +26,24 @@ exports.createChat = async ( req , res )=>{
             message:error.message
         })
     }
-}
+};
+
+// Contoller to get all chats
+exports.getChats = async (req,res)=>{
+    try {
+        const userId = req.user._id;
+
+        const chats = (await Chat.find({userId})).toSorted({updatedAt: -1});
+
+        res.json({
+            success:true,
+            chats,
+            message:"Successfully fetched all the chats data..."
+        })
+    } catch (error) {
+        return res.json({
+            success:false,
+            message:error.message
+        })
+    }
+};
