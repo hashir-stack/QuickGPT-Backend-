@@ -77,7 +77,7 @@ exports.loginUser = async (req, res) => {
     if (!isPasswordCorrect) {
       return res.json({
         success: false,
-        message: "Invalid Credentials...",
+        message: "Incorrect Password...",
       });
     }
 
@@ -97,3 +97,19 @@ exports.loginUser = async (req, res) => {
     });
   }
 };
+
+// Controller to get user
+exports.getUser = async ( req , res ) =>{
+  try {
+    const user = req.user;
+    res.json({
+      success:true,
+      user
+    })
+  } catch (error) {
+    return res.json({
+      success:false,
+      message:error.message
+    })
+  }
+}
