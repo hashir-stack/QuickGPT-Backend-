@@ -1,6 +1,7 @@
 const User = require("../model/User");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
+const Chat = require("../model/Chat");
 
 const generateToken = (userId) => {
   const token = jwt.sign({ userId }, process.env.JWT_SECRET, {
@@ -105,6 +106,38 @@ exports.getUser = async ( req , res ) =>{
     res.json({
       success:true,
       user
+    })
+  } catch (error) {
+    return res.json({
+      success:false,
+      message:error.message
+    })
+  }
+}
+
+// Controller to get All Published Image
+exports.getPublishedImages = async( req , res )=>{
+  try {
+    const publishedImageMessages = await Chat.aggregate([
+      {$unwind:"$messages"},
+      {
+        $match:{
+          "messages.isImage":true,
+          "messages.isPublished":true
+        }
+      },
+      {
+        $project:{
+          _id:0,
+          imageUrl:"$messages.content",
+          userName:"$userName"
+        }
+      }
+    ]);
+
+    res.json({
+      success:true,
+      images:publishedImageMessages.reverse()
     })
   } catch (error) {
     return res.json({
