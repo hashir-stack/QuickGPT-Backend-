@@ -107,21 +107,23 @@ exports.imageMessageController = async (req, res) => {
 
     const reply = {
       role:'assistant',
-      content:uploadResponse,
+      content:uploadResponse.url,
       timestamp: Date.now(),
       isImage: true,
       isPublished
     };
 
-    res.json({
-      success: true,
-      reply,
-    });
-
+  
+    // Saving the data in database
     chat.messages.push(reply);
     await chat.save();
 
     await User.updateOne({ _id: userId }, { $inc: { credits: -2 } });
+
+    res.json({
+      success: true,
+      reply,
+    });
 
   } catch (error) {
     return res.json({
