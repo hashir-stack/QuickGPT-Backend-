@@ -102,7 +102,7 @@ exports.purchasePlan = async (req, res) => {
       ],
       mode: "payment",
       success_url: `${origin}/loading`,
-      cancle_url: `${origin}`,
+      cancel_url: `${origin}`,
       metadata:{transactionId:transaction._id.toString(), appId:"QuickGPT"} ,
       expires_at: Math.floor(Date.now() / 1000) + 30 * 60 //expires in 30 mins
     });
