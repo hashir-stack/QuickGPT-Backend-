@@ -8,6 +8,7 @@ const userRoute = require('./routes/userRoutes.js');
 const chatRoute = require('./routes/chatRoutes.js');
 const messageRoute = require('./routes/messageRoutes.js');
 const creditRoute = require('./routes/creditRoutes.js');
+const { stripeWebhooks } = require("./controller/webhook.js");
 
 const app = express();
 
@@ -16,6 +17,9 @@ const port = process.env.PORT || 3000 ;
 
 app.use(cors());
 app.use(express.json());
+
+// Stripe WebHooks
+app.post('/api/stripe',express.raw({type: 'application/json'}),stripeWebhooks);
 
 app.get('/',(req,res)=>{
     res.send("Server is Live!!")
