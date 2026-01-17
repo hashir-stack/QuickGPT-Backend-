@@ -15,11 +15,13 @@ const app = express();
 
 const port = process.env.PORT || 3000 ;
 
+// Stripe WebHooks
+app.post('/api/stripe',express.raw({type: 'application/json'}),stripeWebhooks);
+
 app.use(cors());
 app.use(express.json());
 
-// Stripe WebHooks
-app.post('/api/stripe',express.raw({type: 'application/json'}),stripeWebhooks);
+
 
 app.get('/',(req,res)=>{
     res.send("Server is Live!!")
