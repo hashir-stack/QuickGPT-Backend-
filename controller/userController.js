@@ -1,4 +1,4 @@
-const User = require("../model/User");
+const User = require("../model/User.js");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const Chat = require("../model/Chat");
@@ -50,7 +50,7 @@ exports.registerUser = async (req, res) => {
       message: "Account created Succefully...",
     });
   } catch (error) {
-    return res.josn({
+    return res.json({
       success: false,
       message: error.message,
     });
